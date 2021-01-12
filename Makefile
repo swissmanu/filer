@@ -5,6 +5,7 @@ APP_NAME := filer
 # .PHONY: install
 
 start-server:
+	FILER_UI_PATH=./ui/public \
 	FILER_INBOX_PATH=./example/inbox \
 	FILER_DATA_PATH=./example/target \
 	FILER_RULES_PATH=./example/rules.yml \

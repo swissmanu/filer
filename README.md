@@ -12,6 +12,7 @@
 | `FILER_INBOX_PATH`   | `./inbox`     | Path to the inbox directory.                                 |
 | `FILER_DATA_PATH`    | `./data`      | Path to the data directory. Rule target paths are always evaluated relative to the data path. |
 | `FILER_RULES_PATH`   | `./rules.yml` | Path to a YAML file containing rule definitions.             |
+| `FILER_UI_PATH`      | `./ui`        | Path to filers web user interface. This variable is useful during development; you can ignore it in productive environments. |
 
 ### Rules
 
@@ -30,4 +31,3 @@ rules:
       - type: "move"
         target: "Insurances/Health"
 ```
-

@@ -130,6 +130,8 @@ func main() {
 		json.NewEncoder(w).Encode(rules)
 	}).Methods("GET")
 
+	router.PathPrefix("/").Handler(http.FileServer(http.Dir(config.UIPath)))
+
 	log.Print("Start HTTP server on " + config.Addr)
 	log.Print("Inbox Path: " + config.InboxPath)
 	log.Print("Data Path: " + config.DataPath)

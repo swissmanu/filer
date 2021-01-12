@@ -8,6 +8,7 @@ import (
 // Specification contains all configuration settings for the filer application.
 type Specification struct {
 	Addr      string `envconfig:"ADDR" default:":8000"`
+	UIPath    string `envconfig:"UI_PATH" default:"./ui"`
 	InboxPath string `envconfig:"INBOX_PATH" default:"./inbox"`
 	DataPath  string `envconfig:"DATA_PATH" default:"./data"`
 	RulesPath string `envconfig:"RULES_PATH" default:"./rules.yml"`
