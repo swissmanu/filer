@@ -1,8 +1,10 @@
 APP_NAME := filer
 
-# install:
-# 	cd ui && yarn install
-# .PHONY: install
+install:
+	cd ui && yarn install
+.PHONY: install
+
+start: start-ui start-server
 
 start-server:
 	FILER_UI_PATH=./ui/public \
@@ -12,9 +14,9 @@ start-server:
 	go run cmd/filer/main.go
 .PHONY: start-server
 
-# start-ui:
-# 	cd ui && ./node_modules/.bin/webpack serve --config webpack.dev.js --host=0.0.0.0 --port=3000 --open='Google Chrome'
-# .PHONY: start-ui
+start-ui:
+	cd ui && yarn dev
+.PHONY: start-ui
 
 build: build-server build-ui
 
@@ -28,15 +30,15 @@ build-ui:
 	cd ui && yarn build
 .PHONY: build-ui
 
-# publish-docker-image: build
-# 	@if test -z "$$VERSION"; then echo "Target publish-docker-image requires VERSION env var to be set"; exit 1; fi; \
-# 	docker buildx build \
-# 		--push \
-#     --platform linux/arm/v7,linux/amd64 \
-#     --tag docker.olymp.alabor.me/swissmanu/${APP_NAME}:latest \
-# 		--tag docker.olymp.alabor.me/swissmanu/${APP_NAME}:${VERSION} \
-#     .
-# .PHONY: publish-docker-image
+publish-docker-image: build
+	@if test -z "$$VERSION"; then echo "Target publish-docker-image requires VERSION env var to be set"; exit 1; fi; \
+	docker buildx build \
+		--push \
+    --platform linux/arm/v7,linux/amd64 \
+    --tag docker.olymp.alabor.me/swissmanu/${APP_NAME}:latest \
+		--tag docker.olymp.alabor.me/swissmanu/${APP_NAME}:${VERSION} \
+    .
+.PHONY: publish-docker-image
 
 clean:
 	rm -rf build ui/build

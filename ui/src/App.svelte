@@ -25,19 +25,28 @@
   };
 </script>
 
-<main class="bg-red-100">
-  <h1>filer</h1>
-  {#if !inboxItems || !rules}
-    <div>Loading...</div>
-  {:else if inboxItems[0]}
-    <section>
-      <header>
-        {inboxItems.length} documents pending
-      </header>
-      <PdfViewer url={'/inbox/' + inboxItems[0].name} />
-      <Rules {rules} on:apply={({ detail: rule }) => onApplyRule(rule)} />
-    </section>
-  {:else}
-    <div>Nothing to file! 😎</div>
-  {/if}
+<main class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+  <section
+    class="bg-white overflow-hidden shadow rounded-lg divide-y divide-gray-200 md:mt-16">
+    <header class="px-4 py-5 sm:px-6">
+      <h1 class="text-2xl font-medium">Dokumente einordnen</h1>
+      {#if inboxItems && inboxItems.length > 0}
+        <p class="text-sm">{inboxItems.length} Dokument(e) ausstehend</p>
+      {/if}
+    </header>
+    <div class="px-4 py-5 sm:p-6">
+      {#if !inboxItems || !rules}
+        <div>Laden...</div>
+      {:else if inboxItems[0]}
+        <h2 class="text-lg medium mb-3">{inboxItems[0].name}</h2>
+        <div class="flex">
+          <PdfViewer url={'/inbox/' + inboxItems[0].name} />
+          <Rules {rules} on:apply={({ detail: rule }) => onApplyRule(rule)} />
+        </div>
+
+      {:else}
+        <p>Alle Dokumente sind eingeordnet. 🥳</p>
+      {/if}
+    </div>
+  </section>
 </main>
