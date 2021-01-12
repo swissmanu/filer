@@ -31,4 +31,26 @@ export class API {
       `Could not process response with status code ${response.status} ${response.statusText}`
     );
   }
+
+  async applyRuleToInboxItem(
+    { name: ruleName }: Rule,
+    { name: inboxItemName }: InboxItem
+  ): Promise<void> {
+    const response = await fetch(
+      `${this.baseUrl}/inbox/${inboxItemName}/apply`,
+      {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ruleName }),
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(
+        `Could not apply rule! ${response.status} ${response.statusText}`
+      );
+    }
+  }
 }
