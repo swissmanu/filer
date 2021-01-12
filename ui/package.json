@@ -27,6 +27,7 @@
   "dependencies": {
     "pdfjs-dist": "^2.5.207",
     "sirv-cli": "^1.0.0",
-    "spicery": "^1.1.0"
+    "spicery": "^1.1.0",
+    "tailwindcss": "^2.0.2"
   }
 }
