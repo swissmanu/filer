@@ -16,7 +16,7 @@ start-server:
 # 	cd ui && ./node_modules/.bin/webpack serve --config webpack.dev.js --host=0.0.0.0 --port=3000 --open='Google Chrome'
 # .PHONY: start-ui
 
-# build: build-server build-ui
+build: build-server build-ui
 
 build-server:
 	GOOS=linux GOARCH=arm GOARM=7 go build -o build/linux/arm/v7/${APP_NAME} cmd/${APP_NAME}/main.go
@@ -24,9 +24,9 @@ build-server:
 	GOOS=darwin GOARCH=amd64 go build -o build/darwin/amd64/${APP_NAME} cmd/${APP_NAME}/main.go
 .PHONY: build-server
 
-# build-ui:
-# 	cd ui && NODE_ENV=production ./node_modules/.bin/webpack --config webpack.prod.js
-# .PHONY: build-ui
+build-ui:
+	cd ui && yarn build
+.PHONY: build-ui
 
 # publish-docker-image: build
 # 	@if test -z "$$VERSION"; then echo "Target publish-docker-image requires VERSION env var to be set"; exit 1; fi; \
