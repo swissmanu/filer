@@ -2,6 +2,8 @@ package rule
 
 import (
 	"errors"
+	"fmt"
+	"io"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -64,12 +66,38 @@ func executeAction(action Action, sourcePath string, config *conf.Specification)
 
 		os.MkdirAll(filepath.Dir(targetPath), os.ModePerm)
 
-		err := os.Rename(sourcePath, targetPath)
+		err := moveFile(sourcePath, targetPath)
 		if err != nil {
 			return err
 		}
 	} else {
 		return errors.New("Cannot apply unknown action " + action.Type + " to " + sourcePath)
+	}
+	return nil
+}
+
+func moveFile(sourcePath, destPath string) error {
+	// https://gist.github.com/var23rav/23ae5d0d4d830aff886c3c970b8f6c6b
+	// because os.Rename does not work with volume mounts
+	inputFile, err := os.Open(sourcePath)
+	if err != nil {
+		return fmt.Errorf("Couldn't open source file: %s", err)
+	}
+	outputFile, err := os.Create(destPath)
+	if err != nil {
+		inputFile.Close()
+		return fmt.Errorf("Couldn't open dest file: %s", err)
+	}
+	defer outputFile.Close()
+	_, err = io.Copy(outputFile, inputFile)
+	inputFile.Close()
+	if err != nil {
+		return fmt.Errorf("Writing to output file failed: %s", err)
+	}
+	// The copy was successful, so now delete the original file
+	err = os.Remove(sourcePath)
+	if err != nil {
+		return fmt.Errorf("Failed removing original file: %s", err)
 	}
 	return nil
 }
