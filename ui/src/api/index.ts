@@ -4,7 +4,7 @@ import type { Rule } from "../types/rule";
 import { aRule } from "../types/rule";
 
 export class API {
-  constructor(private readonly baseUrl: string = "") {}
+  constructor(private readonly baseUrl: string = ".") {}
 
   async getRules(): Promise<ReadonlyArray<Rule>> {
     const response = await fetch(`${this.baseUrl}/rules`);
@@ -52,5 +52,9 @@ export class API {
         `Could not apply rule! ${response.status} ${response.statusText}`
       );
     }
+  }
+
+  getUrlForItem({ name }: InboxItem): string {
+    return `${this.baseUrl}/inbox/${name}`;
   }
 }

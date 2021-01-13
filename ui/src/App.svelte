@@ -1,10 +1,10 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { API } from "./api";
-  import type { InboxItem } from "./types/inboxItem";
-  import type { Rule } from "./types/rule";
   import PdfViewer from "./PdfViewer.svelte";
   import Rules from "./Rules.svelte";
+  import type { InboxItem } from "./types/inboxItem";
+  import type { Rule } from "./types/rule";
 
   const api = new API();
 
@@ -40,10 +40,9 @@
       {:else if inboxItems[0]}
         <h2 class="text-lg medium mb-3">{inboxItems[0].name}</h2>
         <div class="flex">
-          <PdfViewer url={'/inbox/' + inboxItems[0].name} />
+          <PdfViewer url={api.getUrlForItem(inboxItems[0])} />
           <Rules {rules} on:apply={({ detail: rule }) => onApplyRule(rule)} />
         </div>
-
       {:else}
         <p>Alle Dokumente sind eingeordnet. 🥳</p>
       {/if}
