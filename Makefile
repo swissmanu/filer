@@ -4,8 +4,6 @@ install:
 	cd ui && yarn install
 .PHONY: install
 
-start: start-ui start-server
-
 start-server:
 	FILER_UI_PATH=./ui/public \
 	FILER_INBOX_PATH=./example/inbox \
@@ -41,5 +39,5 @@ publish-docker-image: build
 .PHONY: publish-docker-image
 
 clean:
-	rm -rf build ui/build
+	rm -rf build ui/public/build
 .PHONY: clean
