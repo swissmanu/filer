@@ -34,7 +34,8 @@ export class API {
 
   async applyRuleToInboxItem(
     { name: ruleName }: Rule,
-    { name: inboxItemName }: InboxItem
+    { name: inboxItemName }: InboxItem,
+    renameInboxItem?: string
   ): Promise<void> {
     const response = await fetch(
       `${this.baseUrl}/inbox/${inboxItemName}/apply`,
@@ -43,7 +44,10 @@ export class API {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ ruleName }),
+        body: JSON.stringify({
+          ruleName,
+          ...(renameInboxItem ? { newInboxItemName: renameInboxItem } : {}),
+        }),
       }
     );
 

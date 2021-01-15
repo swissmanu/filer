@@ -10,17 +10,33 @@
 
   let rules: ReadonlyArray<Rule>;
   let inboxItems: ReadonlyArray<InboxItem>;
+  let name: string = "";
+  $: ruleButtonsDisabled = name.trim().length === 0;
 
   onMount(async () => {
     const [rs, is] = await Promise.all([api.getRules(), api.getInbox()]);
     rules = rs;
     inboxItems = is;
+    getNameFromFirstInboxItem();
   });
+
+  const getNameFromFirstInboxItem = () => {
+    name = inboxItems[0].name.replace(/\.pdf$/i, "");
+  };
+
+  const nextInboxItem = () => {
+    inboxItems = inboxItems.slice(1);
+    getNameFromFirstInboxItem();
+  };
 
   const onApplyRule = async (rule: Rule) => {
     try {
-      await api.applyRuleToInboxItem(rule, inboxItems[0]);
-      inboxItems = inboxItems.slice(1);
+      await api.applyRuleToInboxItem(
+        rule,
+        inboxItems[0],
+        name !== inboxItems[0].name ? name : undefined
+      );
+      nextInboxItem();
     } catch (e) {}
   };
 
@@ -32,7 +48,7 @@
     ) {
       try {
         await api.deleteInboxItem(inboxItems[0]);
-        inboxItems = inboxItems.slice(1);
+        nextInboxItem();
       } catch (e) {}
     }
   };
@@ -52,7 +68,16 @@
       {#if !inboxItems || !rules}
         <div>Laden...</div>
       {:else if inboxItems[0]}
-        <h2 class="text-lg medium mb-3">{inboxItems[0].name}</h2>
+        <h2 class="text-lg medium mb-3">
+          <input
+            type="text"
+            name="inboxItemName"
+            id="inboxItemName"
+            class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+            placeholder="Gib einen namen für dieses Dokument ein"
+            bind:value={name}
+          />
+        </h2>
         <div class="flex gap-4 flex-col md:flex-row">
           <div class="flex-2">
             <PdfViewer url={api.getUrlForItem(inboxItems[0])} />
@@ -60,6 +85,7 @@
           <div class="flex-1">
             <Rules
               {rules}
+              disabled={ruleButtonsDisabled}
               on:apply={({ detail: rule }) => onApplyRule(rule)}
               on:delete={onDeleteDoucment}
             />

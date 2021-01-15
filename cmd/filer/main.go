@@ -23,7 +23,10 @@ func (a byModifiedDate) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
 func (a byModifiedDate) Less(i, j int) bool { return a[i].ModTime().Before(a[j].ModTime()) }
 
 type applyRequest struct {
+	// The name of a rule which should be applied to the inbox item.
 	RuleName string
+	// Rename the inbox item using this value before applying the rule.
+	NewInboxItemName *string
 }
 
 func fileExists(path string) bool {
@@ -88,6 +91,25 @@ func main() {
 			return
 		}
 
+		if request.NewInboxItemName != nil {
+			renamedPath := filepath.Join(config.InboxPath, *request.NewInboxItemName)
+
+			// Maintain file extension:
+			sourceExtension := filepath.Ext(sourcePath)
+			if !strings.HasSuffix(strings.ToLower(renamedPath), strings.ToLower(sourceExtension)) {
+				renamedPath = renamedPath + sourceExtension
+			}
+
+			log.Print("Rename " + sourcePath + " to " + renamedPath)
+			err = os.Rename(sourcePath, renamedPath)
+			if err != nil {
+				http.Error(w, "Could not rename item to "+*request.NewInboxItemName, http.StatusInternalServerError)
+				log.Print("Could not rename " + sourcePath + " to " + renamedPath)
+				return
+			}
+			sourcePath = renamedPath
+		}
+
 		ruleToApply, err := rule.FindRule(rules.Rules, request.RuleName)
 		if err != nil {
 			http.Error(w, "Rule "+request.RuleName+" not found", http.StatusInternalServerError)
@@ -96,10 +118,10 @@ func main() {
 			return
 		}
 
-		log.Print("Apply " + ruleToApply.Name + " to " + sourcePath)
+		log.Print("Apply rule " + ruleToApply.Name + " to " + sourcePath)
 		err = rule.ApplyRule(ruleToApply, sourcePath, config)
 		if err != nil {
-			http.Error(w, "Could not apply "+request.RuleName+" to "+sourcePath, http.StatusInternalServerError)
+			http.Error(w, "Could not apply rule "+request.RuleName+" to "+sourcePath, http.StatusInternalServerError)
 			log.Print(err)
 			return
 		}

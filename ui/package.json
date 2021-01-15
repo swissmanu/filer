@@ -28,6 +28,7 @@
     "typescript": "^3.9.3"
   },
   "dependencies": {
+    "@tailwindcss/forms": "^0.2.1",
     "pdfjs-dist": "^2.5.207",
     "sirv-cli": "^1.0.0",
     "spicery": "^1.1.0",

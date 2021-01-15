@@ -72,7 +72,7 @@ func executeAction(action Action, sourcePath string, config *conf.Specification)
 			return err
 		}
 	} else {
-		return errors.New("Cannot apply unknown action " + action.Type + " to " + sourcePath)
+		return errors.New("Cannot execute unknown action " + action.Type + " to " + sourcePath)
 	}
 	return nil
 }
