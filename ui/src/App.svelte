@@ -23,6 +23,19 @@
       inboxItems = inboxItems.slice(1);
     } catch (e) {}
   };
+
+  const onDeleteDoucment = async () => {
+    if (
+      window.confirm(
+        "Möchtest Du dieses Dokument wirklich unwiederruflich löschen?"
+      )
+    ) {
+      try {
+        await api.deleteInboxItem(inboxItems[0]);
+        inboxItems = inboxItems.slice(1);
+      } catch (e) {}
+    }
+  };
 </script>
 
 <main class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -41,11 +54,15 @@
       {:else if inboxItems[0]}
         <h2 class="text-lg medium mb-3">{inboxItems[0].name}</h2>
         <div class="flex gap-4 flex-col md:flex-row">
-          <div class="flex-1">
+          <div class="flex-2">
             <PdfViewer url={api.getUrlForItem(inboxItems[0])} />
           </div>
           <div class="flex-1">
-            <Rules {rules} on:apply={({ detail: rule }) => onApplyRule(rule)} />
+            <Rules
+              {rules}
+              on:apply={({ detail: rule }) => onApplyRule(rule)}
+              on:delete={onDeleteDoucment}
+            />
           </div>
         </div>
       {:else}

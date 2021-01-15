@@ -125,6 +125,24 @@ func main() {
 		w.Write(file)
 	}).Methods("GET")
 
+	router.HandleFunc("/inbox/{item}", func(w http.ResponseWriter, r *http.Request) {
+		vars := mux.Vars(r)
+		itemPath := filepath.Join(config.InboxPath, vars["item"])
+
+		if !fileExists(itemPath) {
+			http.Error(w, "", http.StatusNotFound)
+			log.Print(itemPath + " not found")
+			return
+		}
+
+		err := os.Remove(itemPath)
+		if err != nil {
+			http.Error(w, "Could not delete file "+itemPath, http.StatusInternalServerError)
+			log.Print(err)
+			return
+		}
+	}).Methods("DELETE")
+
 	router.HandleFunc("/rules", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		json.NewEncoder(w).Encode(rules)

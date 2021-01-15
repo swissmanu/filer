@@ -9,7 +9,12 @@ module.exports = {
     enabled: production,
     content: ["./src/**/*.svelte", "./public/**/*.html"],
   },
-  theme: {},
+  theme: {
+    flex: {
+      1: "1 1 0%",
+      2: "2 2 0%",
+    },
+  },
   variants: {},
   plugins: [],
 };

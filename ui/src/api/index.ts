@@ -57,4 +57,16 @@ export class API {
   getUrlForItem({ name }: InboxItem): string {
     return `${this.baseUrl}/inbox/${name}`;
   }
+
+  async deleteInboxItem({ name }: InboxItem): Promise<void> {
+    const response = await fetch(`${this.baseUrl}/inbox/${name}`, {
+      method: "delete",
+    });
+
+    if (!response.ok) {
+      throw new Error(
+        `Could not delete file. Response with status code ${response.status} ${response.statusText}`
+      );
+    }
+  }
 }

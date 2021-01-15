@@ -1,12 +1,15 @@
 <script lang="ts">
   import type { Rule } from "./types/rule";
   import { createEventDispatcher } from "svelte";
-  const dispatch = createEventDispatcher<{ apply: Rule }>();
+  const dispatch = createEventDispatcher<{ apply: Rule; delete: void }>();
 
   export let rules: ReadonlyArray<Rule>;
 
   const onClickRule = (r: Rule) => {
     dispatch("apply", r);
+  };
+  const onClickDelete = () => {
+    dispatch("delete");
   };
 </script>
 
@@ -23,4 +26,14 @@
       </button>
     </li>
   {/each}
+  <li class="pb-4">
+    <button
+      class="inline w-full px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+      on:click={onClickDelete}>
+      <span class="flex flex-col items-start text-left">
+        <span>Löschen</span>
+        <span class="text-xs font-normal">Dieses Dokument unwiederruflich löschen</span>
+      </span>
+    </button>
+  </li>
 </ul>
