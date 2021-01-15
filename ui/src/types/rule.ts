@@ -8,11 +8,13 @@ import {
 
 export interface Rule {
   name: string;
+  description: string;
   actions: ReadonlyArray<Action>;
 }
 
 export const aRule: ParseFn<Rule> = (x) => ({
   name: fromMap(x, "name", aString),
+  description: fromMap(x, "description", aString),
   actions: fromMap(x, "actions", anArrayContaining(anAction)),
 });
 

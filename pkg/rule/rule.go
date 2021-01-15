@@ -17,8 +17,9 @@ type Rules struct {
 }
 
 type Rule struct {
-	Name    string   `json:"name"`
-	Actions []Action `json:"actions"`
+	Name        string   `json:"name"`
+	Description string   `json:"description"`
+	Actions     []Action `json:"actions"`
 }
 
 type Action struct {

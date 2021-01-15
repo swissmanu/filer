@@ -10,8 +10,17 @@
   };
 </script>
 
-<ul>
+<ul class="flex-1">
   {#each rules as rule}
-    <li><button on:click={() => onClickRule(rule)}>{rule.name}</button></li>
+    <li class="pb-4">
+      <button
+        class="inline w-full px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        on:click={() => onClickRule(rule)}>
+        <span class="flex flex-col items-start">
+          <span>{rule.name}</span>
+          <span class="text-xs font-normal">{rule.description}</span>
+        </span>
+      </button>
+    </li>
   {/each}
 </ul>
