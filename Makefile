@@ -1,4 +1,5 @@
 APP_NAME := filer
+DOCKER_REPO := docker.olymp.alabor.me/swissmanu/
 
 install:
 	cd ui && yarn install
@@ -33,8 +34,8 @@ publish-docker-image: build
 	docker buildx build \
 		--push \
     --platform linux/arm/v7,linux/amd64 \
-    --tag docker.olymp.alabor.me/swissmanu/${APP_NAME}:latest \
-		--tag docker.olymp.alabor.me/swissmanu/${APP_NAME}:${VERSION} \
+    --tag ${DOCKER_REPO}${APP_NAME}:latest \
+		--tag ${DOCKER_REPO}${APP_NAME}:${VERSION} \
     .
 .PHONY: publish-docker-image
 
