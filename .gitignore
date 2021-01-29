@@ -1,3 +1,4 @@
 example/
 build/
 *.code-workspace
+rules.yml
