@@ -1,15 +1,20 @@
 APP_NAME := filer
 DOCKER_REPO := docker.olymp.alabor.me/swissmanu/
 
+FILER_UI_PATH ?= ./ui/public
+FILER_INBOX_PATH ?= ./example/inbox
+FILER_DATA_PATH ?= ./example/target
+FILER_RULES_PATH ?= ./example/rules.yml
+
 install:
 	cd ui && yarn install
 .PHONY: install
 
 start-server:
-	FILER_UI_PATH=./ui/public \
-	FILER_INBOX_PATH=./example/inbox \
-	FILER_DATA_PATH=./example/target \
-	FILER_RULES_PATH=./example/rules.yml \
+	FILER_UI_PATH=$(FILER_UI_PATH) \
+	FILER_INBOX_PATH=$(FILER_INBOX_PATH) \
+	FILER_DATA_PATH=$(FILER_DATA_PATH) \
+	FILER_RULES_PATH=$(FILER_RULES_PATH) \
 	go run cmd/filer/main.go
 .PHONY: start-server
 
