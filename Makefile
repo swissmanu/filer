@@ -22,7 +22,7 @@ start-ui:
 	cd ui && yarn dev
 .PHONY: start-ui
 
-build: build-server build-ui
+build: clean build-server build-ui
 
 build-server:
 	GOOS=linux GOARCH=arm GOARM=7 go build -o build/linux/arm/v7/${APP_NAME} cmd/${APP_NAME}/main.go
@@ -34,7 +34,7 @@ build-ui:
 	cd ui && yarn build
 .PHONY: build-ui
 
-publish-docker-image: build
+publish-docker-image:
 	@if test -z "$$VERSION"; then echo "Target publish-docker-image requires VERSION env var to be set"; exit 1; fi; \
 	docker buildx build \
 		--push \
