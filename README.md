@@ -17,7 +17,7 @@ We use a scanning app on our smartphones to scan documents to an inbox on a loca
 
 ### The Story aka "Why!?"
 
-We went paperless some years ago and made scanning receipts and other documents a habit. To make the scanning as effortless as possible, we decided to upload the resulting PDF files automatically to a shared inbox directory on our file server. Unfortunately, filing and categorizing the scans afterwards turned out to be too cumbersome to do regularly: Sitting down and moving files from one folder to another was just nothing we enjoy that much 😇
+We went paperless some years ago at home and made scanning receipts and other documents a habit. To make the scanning as effortless as possible, we decided to upload the resulting PDF files automatically to a shared inbox directory on our file server. Unfortunately, filing and categorizing the scans afterwards turned out to be too cumbersome to do regularly: Sitting down and moving files from one folder to another was just nothing we enjoy that much 😇
 
 `filer` makes this task less tedious for us: Open the web application, have a glance on the PDF preview, select one of the preset actions, repeat until the inbox is empty.
 
@@ -28,8 +28,8 @@ We went paperless some years ago and made scanning receipts and other documents 
 3. Build the server: `make build-server`
 4. Build the UI: `make build-ui`
 5. Build a Docker image using the provided `Dockerfile.`
-6. Create a `rules.yml` file with your categorization rules of choice (see Rules section below).
-7. Start Docker container, see Environment Variables section below for available configuration options.
+6. Create a `rules.yml` file with your categorization rules of choice (see "Rules" Section below).
+7. Start Docker container, see the "Environment Variables" Section below for available configuration options.
 
 ## Configuration
 
