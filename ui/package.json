@@ -1,6 +1,9 @@
 {
-  "name": "svelte-app",
+  "name": "filer-ui",
   "version": "1.0.0",
+  "private": true,
+  "author": "Manuel Alabor <manuel@alabor.me>",
+  "license": "MIT",
   "engines": {
     "node": ">=12"
   },
