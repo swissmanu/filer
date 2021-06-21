@@ -1,5 +1,4 @@
 APP_NAME := filer
-DOCKER_REPO := docker.olymp.alabor.me/swissmanu/
 
 FILER_UI_PATH ?= ./ui/public
 FILER_INBOX_PATH ?= ./example/inbox
@@ -33,16 +32,6 @@ build-server:
 build-ui:
 	cd ui && yarn build
 .PHONY: build-ui
-
-publish-docker-image:
-	@if test -z "$$VERSION"; then echo "Target publish-docker-image requires VERSION env var to be set"; exit 1; fi; \
-	docker buildx build \
-		--push \
-    --platform linux/arm/v7,linux/amd64 \
-    --tag ${DOCKER_REPO}${APP_NAME}:latest \
-		--tag ${DOCKER_REPO}${APP_NAME}:${VERSION} \
-    .
-.PHONY: publish-docker-image
 
 clean:
 	rm -rf build ui/public/build
