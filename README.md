@@ -23,26 +23,24 @@ We went paperless some years ago at home and made scanning receipts and other do
 
 ## Usage
 
-1. Clone this repository.
-2. Install dependencies: `make install`
-3. Build the server: `make build-server`
-4. Build the UI: `make build-ui`
-5. Build a Docker image using the provided `Dockerfile.`
-6. Create a `rules.yml` file with your categorization rules of choice (see "Rules" Section below).
-7. Start Docker container, see the "Environment Variables" Section below for available configuration options.
+1. Create a `rules.yml` file with your categorization rules of choice (see "Rules" Section below).
+
+2. Prepare an inbox and document archive directory
+
+3. Start a `filer` Docker container:
+
+   ```bash
+   docker run -it --rm \
+     -v /your/inbox:/inbox \
+     -v /your/archive:/data \
+     -v /your/rules.yml:/rules.yml \
+     -p 8000:8000 \
+     ghcr.io/swissmanu/filer/filer@v0.0.9
+   ```
+
+4. Access `filer` via https://localhost:8000
 
 ## Configuration
-
-### Environment Variables
-
-| Environment Variable | Default       | Description                                                                                                                  |
-| -------------------- | ------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| `FILER_ADDR`         | `:8000`       | A network interface and port where filer will provide its API and UI via HTTP.                                               |
-| `FILER_INBOX_PATH`   | `./inbox`     | Path to the inbox directory.                                                                                                 |
-| `FILER_DATA_PATH`    | `./data`      | Path to the data directory. Rule target paths are always evaluated relative to the data path.                                |
-| `FILER_RULES_PATH`   | `./rules.yml` | Path to a YAML file containing rule definitions.                                                                             |
-| `FILER_UI_PATH`      | `./ui`        | Path to filers web user interface. This variable is useful during development; you can ignore it in productive environments. |
-| `UMASK_SET`          | `-022`        | Set the `umask` value for files created by the filer application.                                                            |
 
 ### Rules
 
@@ -62,6 +60,17 @@ rules:
         target: "Insurances/Health"
 ```
 
+### Environment Variables
+
+| Environment Variable | Default       | Description                                                                                                                  |
+| -------------------- | ------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `FILER_ADDR`         | `:8000`       | A network interface and port where filer will provide its API and UI via HTTP.                                               |
+| `FILER_INBOX_PATH`   | `./inbox`     | Path to the inbox directory.                                                                                                 |
+| `FILER_DATA_PATH`    | `./data`      | Path to the data directory. Rule target paths are always evaluated relative to the data path.                                |
+| `FILER_RULES_PATH`   | `./rules.yml` | Path to a YAML file containing rule definitions.                                                                             |
+| `FILER_UI_PATH`      | `./ui`        | Path to filers web user interface. This variable is useful during development; you can ignore it in productive environments. |
+| `UMASK_SET`          | `-022`        | Set the `umask` value for files created by the filer application.                                                            |
+
 ## Development
 
 ### Start development
@@ -70,13 +79,4 @@ rules:
 make install      # Instal dependencies
 make start-ui     # Start rollup in watch mode
 make start-server # Start http server
-```
-
-### Publish a new Version
-
-The `make` target `publish-docker-image` builds the `Dockerfile` using `buildx` for multiple CPU architectures and publishes the resulting Docker image. Update the `DOCKER_REPO` variable in `Makefile` to your own Docker repository destination.
-
-```shell
-git tag vX.Y.Z  # Optional
-VERSION=X.Y.Z make publish-docker-image
 ```
