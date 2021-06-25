@@ -15,6 +15,5 @@ module.exports = {
       2: "2 2 0%",
     },
   },
-  variants: {},
   plugins: [require("@tailwindcss/forms")],
 };

@@ -1,0 +1,20 @@
+{
+  "delete": {
+    "confirm": "Möchtest Du dieses Dokument wirklich unwiederruflich löschen?"
+  },
+  "inbox": {
+    "title": "Dokumente einordnen",
+    "loading": "Laden...",
+    "pendingDocuments": "{count} Dokument(e) ausstehend",
+    "noPendingDocuments": "Alle Dokumente sind eingeordnet. 🥳",
+    "rename": {
+      "placeholder": "Gib einen Namen für dieses Dokument ein"
+    },
+    "rules": {
+      "delete": {
+        "name": "Löschen",
+        "description": "Dieses Dokument unwiederruflich löschen"
+      }
+    }
+  }
+}

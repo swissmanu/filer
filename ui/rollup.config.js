@@ -2,11 +2,12 @@ import svelte from "rollup-plugin-svelte";
 import commonjs from "@rollup/plugin-commonjs";
 import resolve from "@rollup/plugin-node-resolve";
 import livereload from "rollup-plugin-livereload";
+import json from "@rollup/plugin-json";
 import { terser } from "rollup-plugin-terser";
 import sveltePreprocess from "svelte-preprocess";
 import typescript from "@rollup/plugin-typescript";
 import css from "rollup-plugin-css-only";
-import tailwind from 'tailwindcss';
+import tailwind from "tailwindcss";
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -16,9 +17,10 @@ export default {
     sourcemap: true,
     format: "iife",
     name: "app",
-    file: "public/build/bundle.js",
+    dir: "public/build",
   },
   plugins: [
+    json(),
     svelte({
       preprocess: sveltePreprocess({
         postcss: {

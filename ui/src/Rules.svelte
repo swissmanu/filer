@@ -1,6 +1,8 @@
 <script lang="ts">
   import type { Rule } from "./types/rule";
   import { createEventDispatcher } from "svelte";
+  import { _ } from "svelte-i18n";
+
   const dispatch = createEventDispatcher<{ apply: Rule; delete: void }>();
 
   export let rules: ReadonlyArray<Rule>;
@@ -18,9 +20,11 @@
   {#each rules as rule}
     <li class="pb-4">
       <button
-        class="inline w-full px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        data-testid="rule"
+        class="inline w-full px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:cursor-not-allowed disabled:col-gray-50"
         on:click={() => onClickRule(rule)}
-        {disabled}>
+        {disabled}
+      >
         <span class="flex flex-col items-start">
           <span>{rule.name}</span>
           <span class="text-xs font-normal">{rule.description}</span>
@@ -30,12 +34,14 @@
   {/each}
   <li class="pb-4">
     <button
+      data-testid="delete-inbox-item"
       class="inline w-full px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-      on:click={onClickDelete}>
+      on:click={onClickDelete}
+    >
       <span class="flex flex-col items-start text-left">
-        <span>Löschen</span>
+        <span>{$_("inbox.rules.delete.name")}</span>
         <span class="text-xs font-normal"
-          >Dieses Dokument unwiederruflich löschen</span
+          >{$_("inbox.rules.delete.description")}</span
         >
       </span>
     </button>

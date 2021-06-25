@@ -1,0 +1,20 @@
+{
+  "delete": {
+    "confirm": "Do you really want to delete this document?"
+  },
+  "inbox": {
+    "title": "File Documents",
+    "loading": "Loading...",
+    "pendingDocuments": "{count} pending document(s)",
+    "noPendingDocuments": "All documents filed. 🥳",
+    "rename": {
+      "placeholder": "Please enter a name for this document"
+    },
+    "rules": {
+      "delete": {
+        "name": "Delete",
+        "description": "Delete this document"
+      }
+    }
+  }
+}

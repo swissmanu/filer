@@ -2,3 +2,4 @@ example/
 build/
 *.code-workspace
 rules.yml
+node_modules/
