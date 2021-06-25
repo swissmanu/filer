@@ -14,7 +14,9 @@ We use a scanning app on our smartphones to scan documents to an inbox on a loca
 - Move inbox document, based on a set of configurable rules, to another directory
 - Rename inbox document before moving it to the document archive
 - Delete inbox document without moving
-- Browser user interface in your language (currently german and english. Your translations are welcome! 🥰)
+- Mobile-friendly browser user interface in your own language (currently german and english. Your translations are welcome! 🥰)
+
+![filer Demonstration with three PDF documents](./docs/demo.gif)
 
 ### The Story aka "Why!?"
 
