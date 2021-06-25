@@ -35,7 +35,7 @@ We went paperless some years ago at home and made scanning receipts and other do
      -v /your/archive:/data \
      -v /your/rules.yml:/rules.yml \
      -p 8000:8000 \
-     ghcr.io/swissmanu/filer/filer@v0.0.9
+     ghcr.io/swissmanu/filer/filer:latest
    ```
 
 4. Access `filer` via https://localhost:8000

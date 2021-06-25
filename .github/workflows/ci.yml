@@ -46,6 +46,8 @@ jobs:
           context: .
           platforms: linux/arm/v7,linux/amd64
           push: true
+          # :latest can be dangerous when republishing old version... But it's okay for now.
           tags: |
+            ghcr.io/${{ github.repository }}/filer:latest
             ghcr.io/${{ github.repository }}/filer:${{ steps.get_version.outputs.version }}
 
