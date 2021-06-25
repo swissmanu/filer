@@ -14,6 +14,7 @@ We use a scanning app on our smartphones to scan documents to an inbox on a loca
 - Move inbox document, based on a set of configurable rules, to another directory
 - Rename inbox document before moving it to the document archive
 - Delete inbox document without moving
+- Browser user interface in your language (currently german and english. Your translations are welcome! 🥰)
 
 ### The Story aka "Why!?"
 
@@ -25,7 +26,10 @@ We went paperless some years ago at home and made scanning receipts and other do
 
 1. Create a `rules.yml` file with your categorization rules of choice (see "Rules" Section below).
 
-2. Prepare an inbox and document archive directory
+2. Prepare two directories:
+
+   - Inbox: `filer` will process PDFs from here. Usually this is the directory where you put your scanned documents.
+   - Document archive: The root of your document archive.
 
 3. Start a `filer` Docker container:
 
@@ -76,7 +80,7 @@ rules:
 ### Start development
 
 ```shell
-make install      # Instal dependencies
+make install      # Install dependencies
 make start-ui     # Start rollup in watch mode
 make start-server # Start http server
 ```
